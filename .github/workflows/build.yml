@@ -45,7 +45,7 @@ jobs:
           name: esp32s3-uac-pcm5102-firmware
           path: |
             build/esp32s3_uac_pcm5102_MERGED.bin
-            build/esp32s3-usb-i2s.bin
+
             build/bootloader/bootloader.bin
             build/partition_table/partition-table.bin
           retention-days: 90
