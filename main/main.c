@@ -16,7 +16,8 @@ static const char *TAG = "UAC_I2S";
 
 static i2s_chan_handle_t s_i2s_tx = NULL;
 
-static esp_err_t spk_data_cb(uint8_t *buf, size_t len, void *ctx)
+/* 스피커 출력 콜백: USB에서 받은 PCM 데이터를 I2S로 보냄 */
+static esp_err_t uac_output_cb(uint8_t *buf, size_t len, void *cb_ctx)
 {
     if (!buf || len == 0) return ESP_OK;
     size_t written = 0;
@@ -51,12 +52,12 @@ static void i2s_init(void)
 static void uac_init(void)
 {
     uac_device_config_t cfg = {
-        .output_ch          = 2,
-        .input_ch           = 0,
-        .output_sample_rate = SAMPLE_RATE,
-        .input_sample_rate  = SAMPLE_RATE,
-        .spk_data_cb        = spk_data_cb,
-        .spk_data_ctx       = NULL,
+        .skip_tinyusb_init = false,
+        .output_cb     = uac_output_cb,
+        .input_cb      = NULL,
+        .set_mute_cb   = NULL,
+        .set_volume_cb = NULL,
+        .cb_ctx        = NULL,
     };
     ESP_ERROR_CHECK(uac_device_init(&cfg));
     ESP_LOGI(TAG, "USB UAC ready — 48kHz/16-bit/Stereo");
