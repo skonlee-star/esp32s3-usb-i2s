@@ -19,6 +19,13 @@ jobs:
           target: esp32s3
           command: |
             idf.py build
+
+            echo "==== 빌드된 .bin 파일 목록 ===="
+            ls -la build/*.bin
+
+            APP_BIN=$(ls build/*.bin | grep -v bootloader | grep -v partition | head -n 1)
+            echo "앱 바이너리: $APP_BIN"
+            
             python3 $IDF_PATH/components/esptool_py/esptool/esptool.py \
               --chip esp32s3 \
               merge_bin \
@@ -27,8 +34,11 @@ jobs:
               --flash_size 4MB \
               0x0     build/bootloader/bootloader.bin \
               0x8000  build/partition_table/partition-table.bin \
-              0x10000 build/esp32s3-usb-i2s.bin
-
+              0x10000 "$APP_BIN"
+              
+              echo "==== Merged binary 생성 완료 ===="
+              ls -lh build/esp32s3_uac_pcm5102_MERGED.bin
+            
       - name: Upload firmware artifacts
         uses: actions/upload-artifact@v4
         with:
