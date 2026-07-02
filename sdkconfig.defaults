@@ -1,43 +1,16 @@
-# ── 칩 타겟 ─────────────────────────────────────────────────────────
 CONFIG_IDF_TARGET="esp32s3"
-
-# ── Flash / PSRAM (ESP32-S3FH4R2: 4MB Flash, 2MB Octal PSRAM) ──────
 CONFIG_ESPTOOLPY_FLASHSIZE_4MB=y
 CONFIG_ESPTOOLPY_FLASHMODE_QIO=y
 CONFIG_ESPTOOLPY_FLASHFREQ_80M=y
 CONFIG_SPIRAM=y
 CONFIG_SPIRAM_MODE_OCT=y
 CONFIG_SPIRAM_SPEED_80M=y
-
-# ── USB ──────────────────────────────────────────────────────────────
-CONFIG_USB_OTG_SUPPORTED=y
-CONFIG_TINYUSB_ENABLED=y
-
-# ── USB CDC (로그 출력용, USB Serial 포트로 시리얼 모니터 가능) ──────
+CONFIG_ESP_DEFAULT_CPU_FREQ_MHZ_240=y
+CONFIG_FREERTOS_HZ=1000
 CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG=y
-CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG_ENABLED=y
-
-# ── UAC 설정 ─────────────────────────────────────────────────────────
+CONFIG_UAC_SPK_CHANNEL_NUM=2
+CONFIG_UAC_MIC_CHANNEL_NUM=1
+CONFIG_UAC_SAMPLE_RATE_LIST_SIZE=1
 CONFIG_UAC_SPK_INTERVAL_MS=10
 CONFIG_UAC_MIC_INTERVAL_MS=10
-
-# ── I2S ──────────────────────────────────────────────────────────────
-CONFIG_I2S_ENABLE_DEBUG_LOG=n
-
-# ── FreeRTOS ─────────────────────────────────────────────────────────
-CONFIG_FREERTOS_HZ=1000
-
-# ── CPU 성능 (240MHz 고정) ───────────────────────────────────────────
-CONFIG_ESP_DEFAULT_CPU_FREQ_MHZ_240=y
-
-# ── 로그 레벨 ────────────────────────────────────────────────────────
 CONFIG_LOG_DEFAULT_LEVEL_INFO=y
-
-# ── Watchdog ─────────────────────────────────────────────────────────
-CONFIG_ESP_TASK_WDT_EN=y
-CONFIG_ESP_TASK_WDT_TIMEOUT_S=5
-
-CONFIG_UAC_SPK_CH_NUM=2
-CONFIG_UAC_MIC_CH_NUM=0
-CONFIG_UAC_SAMPLE_RATE=48000
-CONFIG_UAC_SPK_BIT_RESOLUTION=16
